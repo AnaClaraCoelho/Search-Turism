@@ -7,5 +7,7 @@ htmlcov/
 .idea
 /search_turism.log
 /static
+.vscode
+.env
 
 /apimock/node_modules
