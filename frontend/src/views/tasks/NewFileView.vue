@@ -1,98 +1,106 @@
 <template>
-    <form>
-      <v-text-field
-        v-model="state.name"
-        :error-messages="v$.name.$errors.map(e => e.$message)"
-        :counter="10"
-        label="Name"
-        required
-        @input="v$.name.$touch"
-        @blur="v$.name.$touch"
-      ></v-text-field>
-  
-      <v-text-field
-        v-model="state.email"
-        :error-messages="v$.email.$errors.map(e => e.$message)"
-        label="E-mail"
-        required
-        @input="v$.email.$touch"
-        @blur="v$.email.$touch"
-      ></v-text-field>
-  
-      <v-select
-        v-model="state.select"
-        :items="items"
-        :error-messages="v$.select.$errors.map(e => e.$message)"
-        label="Item"
-        required
-        @change="v$.select.$touch"
-        @blur="v$.select.$touch"
-      ></v-select>
-  
-      <v-checkbox
-        v-model="state.checkbox"
-        :error-messages="v$.checkbox.$errors.map(e => e.$message)"
-        label="Do you agree?"
-        required
-        @change="v$.checkbox.$touch"
-        @blur="v$.checkbox.$touch"
-      ></v-checkbox>
-  
-      <v-btn
-        class="me-4"
-        @click="v$.$validate"
+    <v-container>
+
+        <v-form
+        ref="form"
+        v-model="valid"
+      lazy-validation
       >
-        submit
-      </v-btn>
-      <v-btn @click="clear">
-        clear
-      </v-btn>
-    </form>
-  </template>
-  <script>
-  import { reactive, ref } from 'vue'
-  import { useVuelidate } from '@vuelidate/core'
-  import { email, required } from '@vuelidate/validators'
+      <v-text-field
+      v-model="city"
+        :rules="Rules"
+        label="City"
+        required
+        ></v-text-field>
+        
+        <v-text-field
+        v-model="touristSpot"
+        :rules="Rules"
+        label="Tourist Spot"
+        required
+        ></v-text-field>
+        
+        <v-text-field
+        v-model="description"
+        label="Description"
+        required
+        ></v-text-field>
+        
+        <v-col cols="12" class="d-flex align-center justify-center mt-5">
+            <input type="file" accept="image/jpeg" @change="upload" />
+        </v-col>
+        
+        <v-btn
+        :disabled="!valid"
+        color="teal lighten-3"
+        class="mr-4"
+        @click="addNewTask()"
+        :to="{ name: 'tasks-list'}"
+      >
+      Validate
+    </v-btn>
+    
+    <v-btn
+    color="blue lighten-5"
+    class="mr-4"
+    @click="reset"
+    >
+    Reset Form
+</v-btn>
+</v-form>
+</v-container>
+</template>
 
-  export default {
-    setup () {
-      const initialState = {
-        name: '',
-        email: '',
-        select: null,
-        checkbox: null,
-      }
+<script>
+import { useAppStore } from "@/stores/appStore"
+import TasksApi from "@/api/tasks.api.js"
 
-      const state = reactive({
-        ...initialState,
-      })
+export default {
+  setup() {
+    const appStore = useAppStore()
+    return { appStore }
+  },
+  data: () => ({
+    valid: true,
+    city: '',
+    Rules: [
+      v => !!v || 'Required',
+    ],
+    touristSpot: '',
+    description: '',
+    profilePicture: ''
+  }),
 
-      const items = ref([
-        'Item 1',
-        'Item 2',
-        'Item 3',
-        'Item 4',
-      ])
-
-      const rules = {
-        name: { required },
-        email: { required, email },
-        select: { required },
-        items: { required },
-        checkbox: { required },
-      }
-
-      const v$ = useVuelidate(rules, state)
-
-      function clear () {
-        v$.value.$reset()
-
-        for (const [key, value] of Object.entries(initialState)) {
-          state[key] = value
-        }
-      }
-
-      return { state, items, clear, v$ }
+  methods: {
+    reset () {
+      this.$refs.form.reset()
     },
-  }
+    upload(event) {
+      const input = event.target;
+      if (input.files && input.files[0]) {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          this.profilePicture = e.target.result;
+        };
+        reader.readAsDataURL(input.files[0]);
+      }
+    },
+    addNewTask(task) {
+        task = {
+            city: this.city,
+            touristSpot: this.touristSpot,
+            description:this.description,
+            profilePicture: this.profilePicture
+        }
+        this.$refs.form.validate()
+        this.loading = true
+        TasksApi.addNewTask(task.city, task.touristSpot, this.description).then((task) => {
+        this.appStore.showSnackbar(`Nova tarefa adicionada #${task.id}`)
+        this.getTasks()
+        this.loading = false
+        console.log("oi")
+      })
+    },
+  },
+}
 </script>

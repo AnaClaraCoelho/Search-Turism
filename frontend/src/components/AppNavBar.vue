@@ -1,9 +1,10 @@
 <template>
   <v-app-bar>
-    <v-app-bar-title>{{ title }}</v-app-bar-title>
+    <v-btn  :to="{ name: 'base-home' }">
+      <v-app-bar-title>{{ title }}</v-app-bar-title>
+    </v-btn>
     <template #append>
-      <v-btn icon="mdi-heart" :to="{ name: 'base-home' }"></v-btn>
-      <v-btn icon="mdi-magnify"></v-btn>
+      <!-- <v-btn icon="mdi-magnify"></v-btn> -->
       <v-btn
         :prepend-icon="theme === 'light' ? 'mdi-weather-sunny' : 'mdi-weather-night'"
         @click.stop="themeClick"></v-btn>

@@ -2,7 +2,8 @@
   <v-container>
     <v-row align="center" class="mt-10" no-gutters>
       <v-col cols="12" sm="6" offset-sm="3">
-        <v-sheet class="pa-2"> <h1>Sign Up</h1> </v-sheet>
+        <v-sheet class="pa-2"> <h1>Sign Up</h1> 
+        </v-sheet>
         <v-form
           ref="form"
           v-model="valid"
@@ -28,25 +29,15 @@
 
             <v-text-field
             v-model="password"
-            type="password"
+            :append-inner-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
+            :rules="[rules.required, rules.min]"
+            :type="show1 ? 'text' : 'password'"
+            name="input-10-1"
             label="Password"
-            :append-inner-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
-            prepend-inner-icon="mdi-key-outline"
-            variant="outlined"
-            @click:append-inner="changeIcon"
-            required
-            @keyup.enter="login"></v-text-field>
-
-          <v-text-field
-            v-model="confirm_password"
-            type="password"
-            label="Confirm Password"
-            :append-inner-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
-            prepend-inner-icon="mdi-key-outline"
-            variant="outlined"
-            @click:append-inner="changeIcon"
-            required
-            @keyup.enter="login"></v-text-field>
+            hint="At least 8 characters"
+            counter
+            @click:append-inner="show1 = !show1"
+          ></v-text-field>
 
           <v-btn
             block
@@ -93,7 +84,13 @@ export default {
     return {
       loading: false,
       valid: true,
-      showPassword: false,
+      show1: false,
+      show2:false,
+      rules: {
+          required: value => !!value || 'Required.',
+          min: v => v.length >= 8 || 'Min 8 characters',
+          emailMatch: () => (`The email and password you entered don't match`),
+        },
       username: "",
       usernameRules: [
         v => !!v || 'Username is required',
@@ -105,13 +102,9 @@ export default {
         v => !!v || 'E-mail is required',
         v => /.+@.+\..+/.test(v) || 'E-mail must be valid',
       ],
-      confirm_password:"",
       passwordRules: [
       v => !!v || 'Senha é obrigatória',
       ],
-      confirmPasswordRules: [
-      v => !!v || 'Confirme a senha',
-      v => v === this.password || 'Senhas não coincidem'],
       error: false,
       visible: false,
     }

@@ -17,7 +17,7 @@ export default {
   addNewTask: (description) => {
     return new Promise((resolve, reject) => {
       api
-        .post("/api/tasks/add", apiHelpers.dataToForm({ description }))
+        .post("/api/tasks/add", apiHelpers.dataToForm({ city, touristSpot, description }))
         .then((response) => {
           return resolve(response.data)
         })

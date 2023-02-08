@@ -77,7 +77,7 @@ export default {
     AccountsApi.whoami().then((response) => {
       if (response.authenticated) {
         this.saveLoggedUser(response.user)
-        this.appStore.showSnackbar("Usuário já logado", "warning")
+        this.appStore.showSnackbar("User alredy logged in", "warning")
         this.showTasks()
         
       }
@@ -89,7 +89,7 @@ export default {
       AccountsApi.login(this.username, this.password)
         .then((response) => {
           if (!response) {
-            this.appStore.showSnackbar("Usuário ou senha invalida", "danger")
+            this.appStore.showSnackbar("Invalid user or password", "danger")
             return
           }
           this.saveLoggedUser(response.user)
