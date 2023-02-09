@@ -38,4 +38,20 @@ export default {
         })
     })
   },
+  register: (username, email, password) => {
+    return new Promise((resolve, reject) => {
+      api
+        .post("/api/accounts/register", {
+          username: username,
+          email: email, 
+          password: password
+        })
+        .then((response) => {
+          return resolve(response.data)
+        })
+        .catch((error) => {
+          return reject(error)
+        })
+      })
+  }
 }

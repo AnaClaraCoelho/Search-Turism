@@ -23,14 +23,16 @@ class ActivityLog(models.Model):
 class Todo(models.Model):
     description = models.CharField(max_length=512)
     done = models.BooleanField(default=False)
-    # city = models.CharField(max_length=512)
-    # tourist_spot = models.CharField(max_length=512)
+    city = models.CharField(max_length=512)
+    tourist_spot = models.CharField(max_length=512)
+    url_image = models.URLField(max_length = 200)
 
     def to_dict_json(self):
         return {
             'id': self.id,
-            # 'city': self.city,
-            # 'tourist_spot': self.tourist_spot,
+            'city': self.city,
+            'tourist_spot': self.tourist_spot,
             'description': self.description,
+            'url_image': self.url_image,
             'done': self.done,
         }

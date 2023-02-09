@@ -1,6 +1,6 @@
 <template>
-  <v-app-bar>
-    <v-btn  :to="{ name: 'base-home' }">
+  <v-app-bar> 
+    <v-btn  :to="{ name: 'tasks-list' }">
       <v-app-bar-title>{{ title }}</v-app-bar-title>
     </v-btn>
     <template #append>
@@ -13,7 +13,7 @@
         <v-icon icon="mdi-dots-vertical" />
         <v-menu activator="parent">
           <v-list>
-            <v-list-item :to="{ name: 'accounts-logout' }"> Sair </v-list-item>
+            <v-list-item :to="{ name: 'accounts-logout' }"> Logout </v-list-item>
           </v-list>
         </v-menu>
       </v-btn>

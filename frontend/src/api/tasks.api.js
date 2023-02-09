@@ -14,10 +14,10 @@ export default {
         })
     })
   },
-  addNewTask: (description) => {
+  addNewTask: (city, touristSpot, description, url_image) => {
     return new Promise((resolve, reject) => {
       api
-        .post("/api/tasks/add", apiHelpers.dataToForm({ city, touristSpot, description }))
+        .post("/api/tasks/add", apiHelpers.dataToForm({ city, touristSpot, description, url_image }))
         .then((response) => {
           return resolve(response.data)
         })

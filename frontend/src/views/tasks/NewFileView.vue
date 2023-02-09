@@ -4,10 +4,10 @@
         <v-form
         ref="form"
         v-model="valid"
-      lazy-validation
-      >
-      <v-text-field
-      v-model="city"
+        lazy-validation
+        >
+        <v-text-field
+        v-model="city"
         :rules="Rules"
         label="City"
         required
@@ -25,28 +25,39 @@
         label="Description"
         required
         ></v-text-field>
+
+        <v-text-field
+        v-model="url_image"
+        label="Image URL"
+        required
+        ></v-text-field>
         
-        <v-col cols="12" class="d-flex align-center justify-center mt-5">
-            <input type="file" accept="image/jpeg" @change="upload" />
-        </v-col>
+        
         
         <v-btn
         :disabled="!valid"
         color="teal lighten-3"
         class="mr-4"
         @click="addNewTask()"
-        :to="{ name: 'tasks-list'}"
       >
       Validate
     </v-btn>
     
     <v-btn
-    color="blue lighten-5"
+    color="red lighten-5"
     class="mr-4"
     @click="reset"
     >
     Reset Form
-</v-btn>
+    </v-btn>
+
+    <v-btn
+      color="purple lighten-5"
+      class="mr-4"
+      :to="{ name: 'tasks-list' }"
+      >
+      Return
+    </v-btn>
 </v-form>
 </v-container>
 </template>
@@ -68,37 +79,27 @@ export default {
     ],
     touristSpot: '',
     description: '',
-    profilePicture: ''
+    url_image: ''
   }),
 
   methods: {
     reset () {
       this.$refs.form.reset()
     },
-    upload(event) {
-      const input = event.target;
-      if (input.files && input.files[0]) {
-        const reader = new FileReader();
-        reader.onload = (e) => {
-          this.profilePicture = e.target.result;
-        };
-        reader.readAsDataURL(input.files[0]);
-      }
-    },
     addNewTask(task) {
         task = {
             city: this.city,
             touristSpot: this.touristSpot,
             description:this.description,
-            profilePicture: this.profilePicture
+            url_image: this.url_image
         }
         this.$refs.form.validate()
         this.loading = true
-        TasksApi.addNewTask(task.city, task.touristSpot, this.description).then((task) => {
-        this.appStore.showSnackbar(`Nova tarefa adicionada #${task.id}`)
+        TasksApi.addNewTask(task.city, task.touristSpot, task.description, task.url_image).then((task) => {
         this.getTasks()
         this.loading = false
         console.log("oi")
+        this.$router.push({ name: 'tasks-list' })
       })
     },
   },

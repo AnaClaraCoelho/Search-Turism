@@ -29,10 +29,12 @@
 
             <v-text-field
             v-model="password"
+            prepend-inner-icon="mdi-key-variant"
             :append-inner-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
             :rules="[rules.required, rules.min]"
             :type="show1 ? 'text' : 'password'"
             name="input-10-1"
+            variant="outlined"
             label="Password"
             hint="At least 8 characters"
             counter
@@ -43,9 +45,8 @@
             block
             size="large"
             rounded="pill"
-            color="primary"
-            append-icon="mdi-chevron-right"
-            :to="{ name: 'base-signup' } "
+            color="pink lighten-4"
+            @click="register()"
             >
             Sign Up
             
@@ -57,12 +58,12 @@
             block
             size="large"
             rounded="pill"
-            color="primary"
+            color="pink lighten-4"
             variant="outlined"
             append-icon="mdi-home"
             :to="{ name: 'base-home' }" 
             >
-            Inicio
+            Home
           </v-btn>
 
         </v-form>
@@ -85,7 +86,6 @@ export default {
       loading: false,
       valid: true,
       show1: false,
-      show2:false,
       rules: {
           required: value => !!value || 'Required.',
           min: v => v.length >= 8 || 'Min 8 characters',
@@ -109,20 +109,20 @@ export default {
       visible: false,
     }
   },
-  computed: {
-  },
-  mounted() {
-  },
   methods: {
-    toggleMarker () {
-        this.showPassword = !this.showPassword
-    },
-    login() {
-    },
-    saveLoggedUser(user) {
+    register() {
+      if (this.$refs.form.validate()){
+        AccountsApi.register(this.username, this.email, this.password)
+          .then((response)  => {
+            if(response.success) {
+              this.$router.push({ name: 'accounts-login' })
+            }
+          })
+        .catch((error) => {
+          console.error("Error", error)
+        })
       }
-    },
-    showTasks() {
+      }
     }
 }
 </script>

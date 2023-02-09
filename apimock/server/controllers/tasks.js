@@ -31,13 +31,14 @@ module.exports = {
     if (!loggedUser) {
       return;
     }
-    const { description } = req.body;
+    const { description, city,tourist_spot, url_image } = req.body;
     const id = getMaxId(data.tasks) + 1;
     const newTask = {
       id,
       city,
       tourist_spot,
       description,
+      url_image,
       userId: loggedUser.id,
     };
     data.tasks.push(newTask);

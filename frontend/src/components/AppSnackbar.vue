@@ -31,11 +31,11 @@ export default {
     },
     snackbarCollors() {
       const typeCollor = {
-        success: "primary",
-        danger: "red",
-        warning: "orange",
+        success: "teal ",
+        danger: "teal ",
+        warning: "teal ",
       }
-      return `${typeCollor[this.type || "success"]} accent-4`
+      return `${typeCollor[this.type || "success"]} lighten-4`
     },
   },
 }

@@ -6,7 +6,7 @@
         <v-form>
           <v-text-field
             v-model="username"
-            label="E-Mail"
+            label="Username"
             prepend-inner-icon="mdi-email-fast-outline"
             variant="outlined"
             required
@@ -14,18 +14,23 @@
 
           <v-text-field
             v-model="password"
-            type="password"
-            label="Password"
-            prepend-inner-icon="mdi-key-outline"
+            prepend-inner-icon="mdi-key-variant"
+            :append-inner-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
+            :rules="[rules.required, rules.min]"
+            :type="show1 ? 'text' : 'password'"
+            name="input-10-1"
             variant="outlined"
-            required
+            label="Password"
+            hint="At least 8 characters"
+            counter
+            @click:append-inner="show1 = !show1"
             @keyup.enter="login"></v-text-field>
 
           <v-btn
             block
             size="large"
             rounded="pill"
-            color="primary"
+            color="pink"
             append-icon="mdi-chevron-right"
             :to="{ name: 'accounts-login' }"
             @click="login">
@@ -36,7 +41,7 @@
             block
             size="large"
             rounded="pill"
-            color="primary"
+            color="pink"
             variant="outlined"
             :to="{ name: 'base-signup' }" >
             Sign Up
@@ -67,6 +72,11 @@ export default {
       password: "",
       error: false,
       visible: false,
+      show1: false,
+      rules: {
+          required: value => !!value || 'Required.',
+          min: v => v.length >= 8 || 'Min 8 characters',
+        },
     }
   },
   computed: {
@@ -77,7 +87,7 @@ export default {
     AccountsApi.whoami().then((response) => {
       if (response.authenticated) {
         this.saveLoggedUser(response.user)
-        this.appStore.showSnackbar("User alredy logged in", "warning")
+        this.appStore.showSnackbar("User alredy logged in")
         this.showTasks()
         
       }
@@ -89,7 +99,7 @@ export default {
       AccountsApi.login(this.username, this.password)
         .then((response) => {
           if (!response) {
-            this.appStore.showSnackbar("Invalid user or password", "danger")
+            this.appStore.showSnackbar("Invalid user or password")
             return
           }
           this.saveLoggedUser(response.user)

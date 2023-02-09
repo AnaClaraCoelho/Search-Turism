@@ -39,7 +39,7 @@
                   
                   <v-card-actions>
                     <v-btn
-                    color="orange lighten-2"
+                    color="pink lighten-5"
                     text
                     @click="show = !show"
                     >

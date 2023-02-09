@@ -5,18 +5,18 @@
         <v-card class="text-center">
           <v-card-title class="headline"> Bye Bye </v-card-title>
           <v-card-text>
-            <h2>Finalizar sessão?</h2>
+            <h2>End session?</h2>
             <p class="ma-4">
-              <v-btn :loading="loading" color="primary" class="mr-4" x-large block @click="logout">
-                SIM
+              <v-btn :loading="loading" color="pink" class="mr-4" x-large block @click="logout">
+                YES
               </v-btn>
               <v-btn
                 class="my-2"
                 block
-                color="primary"
+                color="pink"
                 variant="outlined"
                 :to="{ name: 'base-home' }">
-                Início
+                home
               </v-btn>
             </p>
           </v-card-text>
@@ -48,7 +48,7 @@ export default {
       AccountsApi.logout()
         .then(() => {
           this.accountsStore.clearLoggedUser()
-          this.appStore.showSnackbar("Sessão encerrada!", "warning")
+          this.appStore.showSnackbar("Session ended!", "warning")
           this.$router.push({ name: "base-home" })
         })
         .finally(() => {

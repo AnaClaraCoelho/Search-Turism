@@ -3,7 +3,7 @@
     <v-responsive class="d-flex align-center text-center fill-height">
       <v-img contain height="240" src="@/assets/turismo.png" />
 
-      <h1 class="text-h2 font-weight-bold">Search Turism</h1>
+      <h1 class="text-h2 font-weight-bold">Search Tourism</h1>
       <code>Vue3 + Vuetify + Vite</code>
 
       <div class="py-6" />
@@ -11,19 +11,20 @@
       <v-row class="d-flex align-center justify-center">
         <v-col cols="auto">
           <v-btn
-            color="primary"
+          v-if="!loggedUser"
+            color="pink lighten-4"
             :to="{ name: 'base-signup' }" 
             min-width="228"
             rel="noopener noreferrer"
             size="x-large"
             variant="flat"
-            class="my-4">
+            class="my-4 mr-3">
             <v-icon icon="mdi-speedometer" size="large" start />
             Sign-Up
           </v-btn>
           <v-btn
             v-if="!loggedUser"
-            color="primary"
+            color="pink lighten-4"
             min-width="228"
             rel="noopener noreferrer"
             size="x-large"
@@ -35,26 +36,15 @@
           </v-btn>
           <v-btn
             v-else
-            color="primary"
+            color="pink"
             min-width="228"
             rel="noopener noreferrer"
             size="x-large"
             variant="flat"
-            :to="{ name: 'accounts-logout' }">
+            :to="{ name: 'accounts-logout' }"
+            class="ml-3">
             <v-icon icon="mdi-account-arrow-right-outline" size="large" start />
             Logout
-          </v-btn>
-          <v-btn
-            v-if="loggedUser"
-            color="primary"
-            min-width="228"
-            rel="noopener noreferrer"
-            size="x-large"
-            variant="flat"
-            :to="{ name: 'tasks-list' }"
-            class="my-4">
-            <v-icon icon="mdi-folder-star-multiple" size="large" start />
-            tarefas
           </v-btn>
         </v-col>
       </v-row>
