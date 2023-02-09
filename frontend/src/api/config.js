@@ -25,7 +25,7 @@ export function responseError(error) {
 
   // Redireciona erro de autênticação para página de login
   if (error.response && error.response.status === 401) {
-    appStore.showSnackbar("Usuário sem autênticação. Efetue o login!", "warning")
+    appStore.showSnackbar("User without authentication!", "warning")
     router.push({
       name: "accounts-login",
     })

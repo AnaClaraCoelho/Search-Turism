@@ -1,19 +1,33 @@
 <template>
-  <v-app-bar> 
-    <v-btn  :to="{ name: 'tasks-list' }">
-      <v-app-bar-title>{{ title }}</v-app-bar-title>
-    </v-btn>
+  <v-app-bar>
+    <v-app-bar-title>
+        <v-btn>
+          <!-- <v-img append src="@/assets/turismo.png" /> -->
+        
+          <v-app-bar-title v-if="!loggedUser" :to="{ name: 'base-home '}"> Search Tourism </v-app-bar-title>
+          <v-app-bar-title v-else> Search Tourism </v-app-bar-title>
+
+        </v-btn>
+      </v-app-bar-title>
     <template #append>
       <!-- <v-btn icon="mdi-magnify"></v-btn> -->
       <v-btn
         :prepend-icon="theme === 'light' ? 'mdi-weather-sunny' : 'mdi-weather-night'"
         @click.stop="themeClick"></v-btn>
 
-      <v-btn icon="mdi-dots-vertical">
+      <v-btn v-if="loggedUser" icon="mdi-dots-vertical">
         <v-icon icon="mdi-dots-vertical" />
         <v-menu activator="parent">
-          <v-list>
-            <v-list-item :to="{ name: 'accounts-logout' }"> Logout </v-list-item>
+          <v-list >
+            <v-list-item :to="{ name: 'accounts-logout' }"  > Logout </v-list-item>
+          </v-list>
+        </v-menu>
+      </v-btn>
+      <v-btn v-else icon="mdi-dots-vertical">
+        <v-icon icon="mdi-dots-vertical" />
+        <v-menu activator="parent">
+          <v-list >
+            <v-list-item :to="{ name: 'accounts-login' }"  > Login </v-list-item>
           </v-list>
         </v-menu>
       </v-btn>
@@ -22,6 +36,9 @@
 </template>
 
 <script>
+import { mapState } from "pinia"
+import { useAccountsStore } from "@/stores/accountsStore"
+
 export default {
   props: {
     title: {
@@ -38,6 +55,9 @@ export default {
   emits: ["themeClick"],
   data: () => {
     return {}
+  },
+  computed: {
+    ...mapState(useAccountsStore, ["loggedUser"]),
   },
   methods: {
     themeClick() {

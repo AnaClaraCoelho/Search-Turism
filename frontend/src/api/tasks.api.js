@@ -26,4 +26,16 @@ export default {
         })
     })
   },
+  deleteTask: (id) => {
+    return new Promise((resolve, reject) => {
+      api
+        .post("/api/tasks/delete", {id})
+        .then((response) => {
+          return resolve(response.data)
+        })
+        .catch((error) => {
+          return reject(error)
+        })
+    })
+  } 
 }

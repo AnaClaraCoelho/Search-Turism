@@ -9,8 +9,9 @@
         <v-text-field
         v-model="city"
         :rules="Rules"
-        label="City"
+        label="City/Country"
         required
+        @keyup.enter="login"
         ></v-text-field>
         
         <v-text-field
@@ -18,18 +19,21 @@
         :rules="Rules"
         label="Tourist Spot"
         required
+        @keyup.enter="login"
         ></v-text-field>
         
         <v-text-field
         v-model="description"
         label="Description"
         required
+        @keyup.enter="login"
         ></v-text-field>
 
         <v-text-field
         v-model="url_image"
         label="Image URL"
         required
+        @keyup.enter="login"
         ></v-text-field>
         
         
@@ -96,7 +100,7 @@ export default {
         this.$refs.form.validate()
         this.loading = true
         TasksApi.addNewTask(task.city, task.touristSpot, task.description, task.url_image).then((task) => {
-        this.getTasks()
+        // this.getTasks()
         this.loading = false
         console.log("oi")
         this.$router.push({ name: 'tasks-list' })

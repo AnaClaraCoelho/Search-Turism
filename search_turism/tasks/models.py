@@ -23,9 +23,9 @@ class ActivityLog(models.Model):
 class Todo(models.Model):
     description = models.CharField(max_length=512)
     done = models.BooleanField(default=False)
-    city = models.CharField(max_length=512)
-    tourist_spot = models.CharField(max_length=512)
-    url_image = models.URLField(max_length = 200)
+    city = models.CharField(max_length=512,default='no city')
+    tourist_spot = models.CharField(max_length=512,default='no tourist spot')
+    url_image = models.URLField(max_length = 255,default='no url image')
 
     def to_dict_json(self):
         return {

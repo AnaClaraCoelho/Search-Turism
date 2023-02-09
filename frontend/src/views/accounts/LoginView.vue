@@ -44,7 +44,7 @@
             color="pink"
             variant="outlined"
             :to="{ name: 'base-signup' }" >
-            Sign Up
+            Sign Up 
           </v-btn>
         </v-form>
       </v-col>
