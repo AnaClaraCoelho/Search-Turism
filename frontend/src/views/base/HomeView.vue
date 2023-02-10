@@ -12,8 +12,22 @@
 
       <v-row class="d-flex align-center justify-center">
         <v-col cols="auto">
+          
           <v-btn
-            v-if="!loggedUser_"
+          color="pink"
+          min-width="228"
+          rel="noopener noreferrer"
+            size="x-large"
+            variant="flat"
+            class="mr-3"
+            :to="{ name: 'tasks-list' }"
+            >
+            <v-icon icon="mdi-web" size="large" start />
+            Tourist Spots
+          </v-btn>
+          
+          <v-btn
+            v-if="loggedUser_"
             color="pink lighten-4"
             :to="{ name: 'base-signup' }" 
             min-width="228"
@@ -24,22 +38,8 @@
             <v-icon icon="mdi-speedometer" size="large" start />
             Sign-Up
           </v-btn>
-
           <v-btn
-            color="pink"
-            min-width="228"
-            rel="noopener noreferrer"
-            size="x-large"
-            variant="flat"
-            class="mr-3"
-            :to="{ name: 'tasks-list' }"
-            >
-            <v-icon icon="mdi-web" size="large" start />
-            Tourist Spots
-          </v-btn>
-
-          <v-btn
-            v-if="!loggedUser_"
+            v-if="loggedUser_"
             color="pink lighten-4"
             min-width="228"
             rel="noopener noreferrer"
@@ -49,19 +49,6 @@
             class="my-4">
             <v-icon icon="mdi-account-arrow-left-outline" size="large" start />
             Login
-          </v-btn>
-
-          <v-btn
-            v-else
-            color="pink"
-            min-width="228"
-            rel="noopener noreferrer"
-            size="x-large"
-            variant="flat"
-            :to="{ name: 'accounts-logout' }"
-            class="ml-3">
-            <v-icon icon="mdi-account-arrow-right-outline" size="large" start />
-            Logout
           </v-btn>
         </v-col>
       </v-row>

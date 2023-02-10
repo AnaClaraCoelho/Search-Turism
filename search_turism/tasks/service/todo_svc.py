@@ -15,6 +15,10 @@ def delete_todo(id):
     todo = Todo.objects.filter(id=id["id"]).delete()
     return {"delete_item": id}
 
-# def edit_todo(id):
-#     todo_update = Todo.objects.filter(id=id)
-#     return todo_update.to_dict_json()
+def edit_todo(id, city, tourist_spot, description, url_image):
+    todo_update = Todo.objects.get(id=id)
+    todo_update.city = city
+    todo_update.tourist_spot = tourist_spot
+    todo_update.description = description
+    todo_update.url_image= url_image
+    todo_update.save()
