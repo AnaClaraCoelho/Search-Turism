@@ -1,7 +1,7 @@
 <template>
   <v-container >
     <v-row no-gutters>
-      <v-col v-if="loggedUser" >
+      <v-col v-if="this.loggedUser_  ">
         <v-tooltip
           v-model="show_plus"
           location="top right"
@@ -13,7 +13,7 @@
               :to="{ name: 'new-task' } "
             >
               <v-icon color="grey-lighten-1" >
-                mdi-plus
+                mdi-plus {{ this.loggedUser_ }}
               </v-icon>
             </v-btn>
           </template>
@@ -122,10 +122,13 @@
 
 <script>
 import { useAppStore } from "@/stores/appStore"
-import { mapState } from "pinia"
 import TasksApi from "@/api/tasks.api.js"
 import TaskForm from "@/components/TaskForm.vue"
+import AccountsApi from "@/api/accounts.api.js"
+import { mapState } from "pinia"
+
 import { useAccountsStore } from "@/stores/accountsStore"
+
 
 export default {
   name: "TasksList",
@@ -145,13 +148,27 @@ export default {
       show_options:false,
       dialogm1:'',
       correct_id:'',
+      loggedUser_: false,
       items: [],
     }
   },
   mounted() {
-    this.getTasks()
-  },
+      this.getTasks()
+      AccountsApi.whoami().then((response) => {
+        this.loggedUser_ = true
+      if (response.authenticated) {
+        this.saveLoggedUser(response.user)
+        
+      }
+    })
+    },
   methods: {
+    saveLoggedUser(user) {
+      this.error = !user
+      if (user) {
+        this.visible = false
+      }
+    },
     getTasks() {
       this.loading = true
       TasksApi.getTasks().then((data) => {
@@ -159,25 +176,33 @@ export default {
         this.loading = false
       })
     },
-    deleteTask(task) {
+    deleteTask(id) {
       this.loading = true
-      TasksApi.deleteTask(task).then((task) => {
+      TasksApi.deleteTask(id).then((id) => {
         this.loading = false
         this.getTasks()
         this.$router.push({ name: 'tasks-list' })
       })
     },
+    editTask(task){
+      this.loading = true
+      TasksApi.editTask(id).then((id) => {
+        this.loading = false
+        this.getTasks()
+        this.$router.push({ name: 'new-task' })
+      })
+    },
     action(id){
       this.show_options = false
       if (this.dialogm1 == 'Edit'){
-        console.log(this.dialogm1)
+        this.editTask(id)
       }
       else if (this.dialogm1 == 'Delete'){
         this.deleteTask(id)
       }
     },
     openToast(id) {
-      if(this.loggedUser){
+      if(this.loggedUser_){
         this.show_options= !this.show_options
         this.correct_id = id  
       }

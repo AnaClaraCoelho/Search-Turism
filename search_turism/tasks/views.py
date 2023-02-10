@@ -19,7 +19,6 @@ def add_todo(request):
         )
     return JsonResponse(todo)
 
-
 def list_todos(request):
     todos = todo_svc.list_todos()
     return JsonResponse({"todos": todos})
@@ -30,4 +29,13 @@ def delete_todo(request):
         json.loads(request.body.decode())
     )
     return JsonResponse(todo, safe=False)
+
+@ajax_login_required
+def edit_todo(request):
+    id = request.POST.get('id_to_up')
+    city = request.POST.get('new_city')
+    touristSpot = request.POST.get('new_touristSpot')
+    description = request.POST.get('new_description')
+    url_image = request.POST.get('new_url_image')
+    todo_svc.update_story(id, city, touristSpot, description, url_image)
 

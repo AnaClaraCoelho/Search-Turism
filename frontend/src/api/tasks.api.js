@@ -37,5 +37,17 @@ export default {
           return reject(error)
         })
     })
-  } 
+  },
+  editTask: (id) => {
+    return new Promise((resolve, reject) => {
+      api
+        .post("/api/tasks/edit", {id})
+        .then((response) => {
+          return resolve(response.data)
+        })
+        .catch((error) => {
+          return reject(error)
+        })
+    })
+  }
 }

@@ -6,4 +6,5 @@ urlpatterns = [
     path("add", views.add_todo),
     path("list", views.list_todos),
     path("delete", views.delete_todo),
+    path("edit", views.edit_todo),
 ]

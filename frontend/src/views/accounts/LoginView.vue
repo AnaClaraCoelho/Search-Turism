@@ -114,12 +114,10 @@ export default {
       if (user) {
         this.accountsStore.setLoggedUser(user)
         this.visible = false
-        console.log("logged")
       }
     },
     showTasks() {
       this.$router.push({ name: "tasks-list" })
-      console.log("--> tasks")
     },
   },
 }

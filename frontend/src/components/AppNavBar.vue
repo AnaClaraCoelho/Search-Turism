@@ -1,11 +1,9 @@
 <template>
   <v-app-bar>
-    <v-app-bar-title>
-        <v-btn>
+    <v-app-bar-title  >
+        <v-btn prepend-icon="mdi-earth">
           <!-- <v-img append src="@/assets/turismo.png" /> -->
-        
-          <v-app-bar-title v-if="!loggedUser" :to="{ name: 'base-home '}"> Search Tourism </v-app-bar-title>
-          <v-app-bar-title v-else> Search Tourism </v-app-bar-title>
+          Through the Earth
 
         </v-btn>
       </v-app-bar-title>
@@ -15,19 +13,12 @@
         :prepend-icon="theme === 'light' ? 'mdi-weather-sunny' : 'mdi-weather-night'"
         @click.stop="themeClick"></v-btn>
 
-      <v-btn v-if="loggedUser" icon="mdi-dots-vertical">
+      <v-btn icon="mdi-dots-vertical">
         <v-icon icon="mdi-dots-vertical" />
         <v-menu activator="parent">
           <v-list >
-            <v-list-item :to="{ name: 'accounts-logout' }"  > Logout </v-list-item>
-          </v-list>
-        </v-menu>
-      </v-btn>
-      <v-btn v-else icon="mdi-dots-vertical">
-        <v-icon icon="mdi-dots-vertical" />
-        <v-menu activator="parent">
-          <v-list >
-            <v-list-item :to="{ name: 'accounts-login' }"  > Login </v-list-item>
+            <v-list-item  v-if="loggedUser_" :to="{ name: 'accounts-logout' }"  > Logout </v-list-item>
+            <v-list-item v-else :to="{ name: 'accounts-login' }"  > Login </v-list-item>
           </v-list>
         </v-menu>
       </v-btn>
@@ -37,9 +28,16 @@
 
 <script>
 import { mapState } from "pinia"
+import AccountsApi from "@/api/accounts.api.js"
+import { useAppStore } from "@/stores/appStore"
 import { useAccountsStore } from "@/stores/accountsStore"
 
 export default {
+  setup() {
+    const appStore = useAppStore()
+    const accountsStore = useAccountsStore()
+    return { appStore, accountsStore }
+  },
   props: {
     title: {
       type: String,
@@ -54,14 +52,31 @@ export default {
   },
   emits: ["themeClick"],
   data: () => {
-    return {}
+    return {
+      loggedUser_: false,
+    }
   },
   computed: {
     ...mapState(useAccountsStore, ["loggedUser"]),
   },
+  mounted() {
+      AccountsApi.whoami().then((response) => {
+        this.loggedUser_ = true
+      if (response.authenticated) {
+        this.saveLoggedUser(response.user)
+        
+      }
+    })
+    },
   methods: {
     themeClick() {
       this.$emit("themeClick")
+    },
+    saveLoggedUser(user) {
+      this.error = !user
+      if (user) {
+        this.visible = false
+      }
     },
   },
 }
