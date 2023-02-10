@@ -31,6 +31,7 @@
           <v-img
             :src="item.url_image"
             height="250px"
+            v-model="url_image"
             cover
             @click="openToast(item.id)"
           >
@@ -79,11 +80,12 @@
 
 
           <v-card-title
+          v-model="tourist_spot"
           >
             {{ item.tourist_spot }}
           </v-card-title>
 
-          <v-card-subtitle>
+          <v-card-subtitle v-model="city">
             {{ item.city }}
           </v-card-subtitle>
 
@@ -108,7 +110,7 @@
             <div v-show="item.done">
               <v-divider></v-divider>
 
-              <v-card-text>
+              <v-card-text v-model="description">
                 {{ item.description }}
               </v-card-text>
             </div>
@@ -143,6 +145,10 @@ export default {
   data() {
     return {
       loading: false,
+      city: '',
+      description: '',
+      tourist_spot: '',
+      url_image: '',
       show: false,
       show_plus:false,
       show_options:false,
@@ -152,6 +158,7 @@ export default {
       items: [],
     }
   },
+  emits: ["newTask"],
   mounted() {
       this.getTasks()
       AccountsApi.whoami().then((response) => {
@@ -184,13 +191,18 @@ export default {
         this.$router.push({ name: 'tasks-list' })
       })
     },
-    editTask(task){
-      this.loading = true
-      TasksApi.editTask(id).then((id) => {
-        this.loading = false
-        this.getTasks()
+    editTask(id){
+      TasksApi.editTask(id).then((task_to_update) => {
+        this.$emit("newTask", {
+          id: 'task_to_update.id',
+          city: 'task_to_update.city',
+          touristSpot: 'task_to_update.tourist_spot',
+          description: 'task_to_update.description',
+          url_image: 'task_to_update.url_image'
+        })
         this.$router.push({ name: 'new-task' })
-      })
+    })
+      
     },
     action(id){
       this.show_options = false

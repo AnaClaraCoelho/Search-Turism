@@ -32,10 +32,8 @@ def delete_todo(request):
 
 @ajax_login_required
 def edit_todo(request):
-    id = request.POST.get('id_to_up')
-    city = request.POST.get('new_city')
-    touristSpot = request.POST.get('new_touristSpot')
-    description = request.POST.get('new_description')
-    url_image = request.POST.get('new_url_image')
-    todo_svc.update_story(id, city, touristSpot, description, url_image)
+    todo = todo_svc.edit_todo(
+        json.loads(request.body.decode())
+    )
+    return JsonResponse(todo, safe=False)
 

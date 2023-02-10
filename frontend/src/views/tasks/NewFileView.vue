@@ -11,7 +11,7 @@
         :rules="Rules"
         label="City/Country"
         required
-        @keyup.enter="login"
+        @keyup.enter="login()"
         ></v-text-field>
         
         <v-text-field
@@ -19,21 +19,21 @@
         :rules="Rules"
         label="Tourist Spot"
         required
-        @keyup.enter="login"
+        @keyup.enter="login()"
         ></v-text-field>
         
         <v-text-field
         v-model="description"
         label="Description"
         required
-        @keyup.enter="login"
+        @keyup.enter="login()"
         ></v-text-field>
 
         <v-text-field
         v-model="url_image"
         label="Image URL"
         required
-        @keyup.enter="login"
+        @keyup.enter="login()"
         ></v-text-field>
         
         
@@ -74,6 +74,12 @@ export default {
   setup() {
     const appStore = useAppStore()
     return { appStore }
+  },
+  props: {
+    newTask: {
+      type: Object,
+      default: null,
+    },
   },
   data: () => ({
     valid: true,
