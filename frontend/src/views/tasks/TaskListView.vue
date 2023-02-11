@@ -1,7 +1,7 @@
 <template>
   <v-container >
     <v-row no-gutters>
-      <v-col v-if="this.loggedUser_  ">
+      <v-col v-if="visible  ">
         <v-tooltip
           v-model="show_plus"
           location="top right"
@@ -42,15 +42,15 @@
             <v-card  min-width="600" class="mx-auto" >
               <v-card-title>Select Option</v-card-title>
               <v-divider></v-divider>
-              <v-card-text style="height: 100px;" >
+              <v-card-text style="height: 80px;" >
                 <v-radio-group
                   v-model="dialogm1"
                   column
                 >
-                  <v-radio
+                  <!-- <v-radio
                     label="Edit"
                     value="Edit"
-                  ></v-radio>
+                  ></v-radio> -->
                   <v-radio
                     label="Delete"
                     value="Delete"
@@ -154,7 +154,7 @@ export default {
       show_options:false,
       dialogm1:'',
       correct_id:'',
-      loggedUser_: false,
+      visible: false,
       items: [],
     }
   },
@@ -162,20 +162,15 @@ export default {
   mounted() {
       this.getTasks()
       AccountsApi.whoami().then((response) => {
-        this.loggedUser_ = true
       if (response.authenticated) {
-        this.saveLoggedUser(response.user)
-        
+        this.visible = true
       }
     })
     },
+    computed: {
+    ...mapState(useAccountsStore, ["loggedUser"]),
+  },
   methods: {
-    saveLoggedUser(user) {
-      this.error = !user
-      if (user) {
-        this.visible = false
-      }
-    },
     getTasks() {
       this.loading = true
       TasksApi.getTasks().then((data) => {
@@ -214,7 +209,7 @@ export default {
       }
     },
     openToast(id) {
-      if(this.loggedUser_){
+      if(this.visible){
         this.show_options= !this.show_options
         this.correct_id = id  
       }
