@@ -27,7 +27,7 @@
           </v-btn>
           
           <v-btn
-            v-if="loggedUser_"
+            v-if="!visible"
             color="pink lighten-4"
             :to="{ name: 'base-signup' }" 
             min-width="228"
@@ -39,7 +39,7 @@
             Sign-Up
           </v-btn>
           <v-btn
-            v-if="loggedUser_"
+            v-if="!visible"
             color="pink lighten-4"
             min-width="228"
             rel="noopener noreferrer"
@@ -64,7 +64,7 @@ import { useAccountsStore } from "@/stores/accountsStore"
 export default {
   data: () => {
     return {
-      loggedUser_: false,
+      visible: false,
     }
   },
   computed: {
@@ -74,6 +74,7 @@ export default {
       AccountsApi.whoami().then((response) => {
         this.loggedUser_ = true
       if (response.authenticated) {
+        this.visible = true
         this.saveLoggedUser(response.user)
         
       }
@@ -83,7 +84,7 @@ export default {
     saveLoggedUser(user) {
       this.error = !user
       if (user) {
-        this.visible = false
+        this.visible = true
       }
     }
   },
