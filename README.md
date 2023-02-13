@@ -1,5 +1,7 @@
 Este projeto fullstack foi criado a partir do template de Djavue do @huogerac. 
 A proposta é possibilitar o compartilhamento de pontos turísticos ao redor do mundo, por diferentes usuários.
+Para uma apresentação mais detalhada, acesse: 
+[https://youtu.be/IH5UgG_9DII]
 Para poder acessar o projeto na sua máquina, você precisa de algumas ferramentas instaladas:   
 # Requisitos (requirements):
 - [Install docker](https://docs.docker.com/install/)
