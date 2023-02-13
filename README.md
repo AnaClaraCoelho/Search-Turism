@@ -23,6 +23,7 @@ Depois de fazer o build e iniciar todos containers, fazendo um docker ps é poss
 ```
 $ docker ps
 CONTAINER ID   IMAGE                  COMMAND                 NAMES
+5f762eb16fac   back-search_turism     "wait-for-it localho…"   search_turism_backend_1
 fc70d0d24a71   front-search_turism    "docker-entrypoint.s…"   search_turism_frontend_1
 54bc3e4bc3d7   nginx                  "/docker-entrypoint.…"   search_turism_nginx_1
 9bf5f32dfd3e   postgres:13.3-alpine   "docker-entrypoint.s…"   search_turism_postgres_1
