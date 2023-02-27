@@ -38,10 +38,10 @@ export default {
         })
     })
   },
-  editTask: (id) => {
+  editTask: (city, touristSpot, description, url_image) => {
     return new Promise((resolve, reject) => {
       api
-        .post("/api/tasks/edit", {id})
+        .post("/api/tasks/edit",apiHelpers.dataToForm({ city, touristSpot, description, url_image }))
         .then((response) => {
           return resolve(response.data)
         })

@@ -31,7 +31,7 @@ module.exports = {
     if (!loggedUser) {
       return;
     }
-    const { description, city,tourist_spot, url_image } = req.body;
+    const { city,tourist_spot,description, url_image } = req.body;
     const id = getMaxId(data.tasks) + 1;
     const newTask = {
       id,
@@ -43,5 +43,13 @@ module.exports = {
     };
     data.tasks.push(newTask);
     res.send(newTask);
+  },
+  del: (req, res) => {
+    const loggedUser = accounts.loginRequired(req, res);
+    if (!loggedUser) {
+      return;
+    }
+    const { city,tourist_spot,description, url_image } = req.body;
+    
   },
 };

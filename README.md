@@ -1,7 +1,8 @@
 Este projeto fullstack foi criado a partir do template de Djavue do @huogerac. 
 A proposta é possibilitar o compartilhamento de pontos turísticos ao redor do mundo, por diferentes usuários.
-Para uma apresentação mais detalhada, acesse: 
-[Link](https://youtu.be/IH5UgG_9DII)
+
+
+[Link para o vídeo explicativo](https://youtu.be/IH5UgG_9DII)
 
 
 ### Para poder acessar o projeto na sua máquina, você precisa de algumas ferramentas instaladas:   
@@ -30,6 +31,6 @@ fc70d0d24a71   front-search_turism    "docker-entrypoint.s…"   search_turism_f
 ```
 Para acessar os serviços, utilize as URLs abaixo:
 
-[http://localhost] para acessar o frontend
-[http://localhost/api] para acessar diretamente alguma rota da API
-[http://localhost/admin] para acessar o Django admin
+[http://localhost](http://localhost) para acessar o frontend
+[http://localhost/api](http://localhost/api) para acessar diretamente alguma rota da API
+[http://localhost/admin](http://localhost/admin) para acessar o Django admin
