@@ -8,27 +8,12 @@
         >
           <template v-slot:activator="{ props }">
             <v-btn
-              icon
-              v-bind="props"
-              :to="{ name: 'new-task' } "
+              :to="{ name: 'tasks-list' } "
             >
-              <v-icon color="grey-lighten-1" >
-                mdi-plus {{ this.loggedUser_ }}
+              <v-icon >
+                mdi-arrow-left 
               </v-icon>
             </v-btn>
-            <v-btn value="favorites"
-              class="ma-4 pb-7 pt-5"
-              :to="{ name: 'favs-list' } "
-            >
-              <v-icon>mdi-heart</v-icon>
-
-              Favoritos
-            </v-btn>
-            <v-text-field
-              v-model="search"
-              label="Busque uma cidade"
-              class="pa-7"
-            ></v-text-field>
           </template>
           <span>New tourist spot</span>
         </v-tooltip>

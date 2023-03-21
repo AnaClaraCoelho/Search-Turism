@@ -10,7 +10,7 @@
             <v-btn
               icon
               v-bind="props"
-              :to="{ name: 'favs-list' } "
+              :to="{ name: 'new-task' } "
             >
               <v-icon color="grey-lighten-1" >
                 mdi-plus {{ this.loggedUser_ }}
@@ -18,7 +18,7 @@
             </v-btn>
             <v-btn value="favorites"
               class="ma-4 pb-7 pt-5"
-              :to="{ name: 'new-task' } "
+              :to="{ name: 'favs-list' } "
             >
               <v-icon>mdi-heart</v-icon>
 
@@ -36,7 +36,7 @@
       <v-spacer></v-spacer>
       <v-responsive width="100%"></v-responsive>
       
-        <v-col cols="3" v-for="item in items" :key="item.id" justify="center" :search="search">
+        <v-col cols="3" v-for="item in items" :key="item.id" justify="center">
             <v-card
               class="mx-auto my-12"
               max-width="374"
@@ -179,7 +179,6 @@ export default {
       correct_id:'',
       visible: false,
       items: [],
-      colorBtn: "pink",
     }
   },
   emits: ["newTask"],
@@ -238,9 +237,6 @@ export default {
         this.correct_id = id  
       }
     },
-    updateColor(){
-      this.colorBtn="blue"
-    }
   },
 }
 </script>
