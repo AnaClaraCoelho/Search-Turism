@@ -10,7 +10,7 @@
             <v-btn
               icon
               v-bind="props"
-              :to="{ name: 'favs-list' } "
+              :to="{ name: 'new-task' } "
             >
               <v-icon color="grey-lighten-1" >
                 mdi-plus {{ this.loggedUser_ }}
@@ -18,17 +18,17 @@
             </v-btn>
             <v-btn value="favorites"
               class="ma-4 pb-7 pt-5"
-              :to="{ name: 'new-task' } "
+              :to="{ name: 'favs-list' } "
             >
               <v-icon>mdi-heart</v-icon>
 
               Favoritos
             </v-btn>
-            <!-- <v-text-field
+            <v-text-field
               v-model="search"
               label="Busque uma cidade"
               class="pa-7"
-            ></v-text-field> -->
+            ></v-text-field>
           </template>
           <span>New tourist spot</span>
         </v-tooltip>
@@ -101,16 +101,7 @@
           <v-card-subtitle v-model="city">
             {{ item.city }}
           </v-card-subtitle>
-          <v-col>
-            <v-btn 
-            icon
-            >
-              <v-icon 
-                icon="mdi-heart" 
-                :color= colorBtn
-                @click="updateColor"></v-icon>
-            </v-btn>
-          </v-col>
+
           <v-card-actions>
             <v-btn
               color="pink"
@@ -155,7 +146,7 @@ import { useAccountsStore } from "@/stores/accountsStore"
 
 
 export default {
-  name: "TasksList",
+  name: "FavsList",
   components: {  TaskForm },
   setup() {
     const appStore = useAppStore()
@@ -178,7 +169,6 @@ export default {
       correct_id:'',
       visible: false,
       items: [],
-      colorBtn: "pink",
     }
   },
   emits: ["newTask"],
@@ -236,10 +226,8 @@ export default {
         this.show_options= !this.show_options
         this.correct_id = id  
       }
+
     },
-    updateColor(){
-      this.colorBtn="blue"
-    }
   },
 }
 </script>

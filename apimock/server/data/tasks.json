@@ -6,6 +6,7 @@
     "description": "Pirâmides do Egito são antigas estruturas feitas em alvenaria construídas pela civilização do Antigo Egito. Até novembro de 2008, existiam fontes citando entre 118 e 138 pirâmides egípcias identificadas",
     "url_image": "https://www.segurospromo.com.br/blog/wp-content/uploads/2020/12/piramides-do-egito-capa.jpg",
     "done": false,
+    "like": false,
     "userId": 1
   },
   {
@@ -15,6 +16,7 @@
     "description": "A London Eye, \"Olho de Londres\", também conhecida como Millennium Wheel, é uma roda-gigante de observação. Situada na cidade de Londres, da Inglaterra, foi inaugurada na passagem entre o dia 31 de dezembro de 1999 e 1 de janeiro de 2000 e é um dos pontos turísticos mais disputados da cidade. ",
     "url_image":"https://lh3.googleusercontent.com/p/AF1QipOVvhrgBSIspTYhxSNWxJd5VT886iO_q7XDvBIF=s680-w680-h510",
     "done": false,
+    "like": false,
     "userId": 1
   }
 

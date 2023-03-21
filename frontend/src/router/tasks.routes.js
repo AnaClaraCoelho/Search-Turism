@@ -2,6 +2,8 @@
 import DefaultLayout from "@/layouts/default/DefaultLayout.vue"
 import TaskListView from "@/views/tasks/TaskListView.vue"
 import NewFileView from "@/views/tasks/NewFileView.vue"
+import FavsListView from "@/views/tasks/FavsListView.vue"
+
 
 export default [
   {
@@ -17,6 +19,11 @@ export default [
         path: "new",
         name: "new-task",
         component: NewFileView,
+      },
+      {
+        path: "favs",
+        name: "favs-list",
+        component: FavsListView,
       },
     ],
   },
