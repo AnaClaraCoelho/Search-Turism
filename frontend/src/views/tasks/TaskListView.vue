@@ -104,11 +104,12 @@
           <v-col>
             <v-btn 
             icon
+            @click="item.like = !item.like"
+            :color="item.like ? 'pink' : 'gray'"
             >
               <v-icon 
                 icon="mdi-heart" 
-                :color= colorBtn
-                @click="updateColor"></v-icon>
+                @click="item.updateColor"></v-icon>
             </v-btn>
           </v-col>
           <v-card-actions>
