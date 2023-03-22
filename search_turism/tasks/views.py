@@ -16,12 +16,14 @@ def add_todo(request):
         request.POST.get("touristSpot"),
         request.POST.get("description"),
         request.POST.get("url_image")
-        )
+    )
     return JsonResponse(todo)
+
 
 def list_todos(request):
     todos = todo_svc.list_todos()
     return JsonResponse({"todos": todos})
+
 
 @ajax_login_required
 def delete_todo(request):
@@ -29,6 +31,7 @@ def delete_todo(request):
         json.loads(request.body.decode())
     )
     return JsonResponse(todo, safe=False)
+
 
 @ajax_login_required
 def edit_todo(request):
@@ -39,3 +42,10 @@ def edit_todo(request):
     url_image = request.POST.get('url_image')
     todo_svc.edit_todo(id, city, tourist_spot, description, url_image)
 
+
+@ajax_login_required
+def like_post(request, post_id):
+    post = request.POST.objects.get(id=post_id)
+    post.likes = not post.likes
+    post.save()
+    return JsonResponse({'likes': post.likes})

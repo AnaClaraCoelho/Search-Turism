@@ -104,7 +104,8 @@
           <v-col>
             <v-btn 
             icon
-            @click="addFavs()"
+            @click="addFavs(like)"
+            :class="{ 'like': like }"
             :color="item.like ? 'pink' : 'gray'"
             >
               <v-icon 
@@ -179,7 +180,7 @@ export default {
       correct_id:'',
       visible: false,
       items: [],
-      is_like: false,
+      liked: false,
     }
   },
   emits: ["newTask"],
@@ -241,7 +242,8 @@ export default {
     addFavs(like) {
       // this.like = true
       // this.item.like = !item.like
-      axios.put.TasksApi.addFavs({ like: true })
+      this.like = !this.like;
+      TasksApi.addFavs(like)
         .then(response => {
           this.like = true
         })
