@@ -36,9 +36,9 @@
       <v-spacer></v-spacer>
       <v-responsive width="100%"></v-responsive>
       
-        <v-col cols="3" v-for="item in items" :key="item.id" justify="center">
+        <v-col cols="4" v-for="item in items" :key="item.id" justify="center">
             <v-card
-              class="mx-auto my-12"
+              class="mx-auto my-12 mr-5"
               max-width="374"
             >
           <v-img
@@ -104,7 +104,7 @@
           <v-col>
             <v-btn 
             icon
-            @click="item.like = !item.like"
+            @click="addFavs()"
             :color="item.like ? 'pink' : 'gray'"
             >
               <v-icon 
@@ -179,6 +179,7 @@ export default {
       correct_id:'',
       visible: false,
       items: [],
+      is_like: false,
     }
   },
   emits: ["newTask"],
@@ -237,6 +238,17 @@ export default {
         this.correct_id = id  
       }
     },
+    addFavs(like) {
+      // this.like = true
+      // this.item.like = !item.like
+      axios.put.TasksApi.addFavs({ like: true })
+        .then(response => {
+          this.like = true
+        })
+        .catch(error => {
+          console.log(error)
+        })
+    }
   },
 }
 </script>

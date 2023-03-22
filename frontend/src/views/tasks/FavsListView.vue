@@ -20,10 +20,10 @@
       </v-col>  
       <v-spacer></v-spacer>
       <v-responsive width="100%"></v-responsive>
-      
-        <v-col cols="3" v-for="item in items" :key="item.id" justify="center" :search="search">
+      <template cols="3" v-for="item in items" :key="item.id" justify="center">
+        <v-col v-if="item.like === true">
             <v-card
-              class="mx-auto my-12"
+              class="mx-auto my-12 mr-5"
               max-width="374"
             >
           <v-img
@@ -86,7 +86,17 @@
           <v-card-subtitle v-model="city">
             {{ item.city }}
           </v-card-subtitle>
-
+          <v-col>
+          <v-btn 
+            icon
+            @click="item.like = !item.like"
+            :color="item.like ? 'pink' : 'gray'"
+            >
+              <v-icon 
+                icon="mdi-heart" 
+                @click="item.updateColor"></v-icon>
+          </v-btn>
+          </v-col>
           <v-card-actions>
             <v-btn
               color="pink"
@@ -115,7 +125,8 @@
           </v-expand-transition>
         </v-card>
         <v-responsive width="100%"></v-responsive>
-    </v-col >
+      </v-col >
+    </template>
   </v-row>   
 </v-container>
 </template>
@@ -154,6 +165,7 @@ export default {
       correct_id:'',
       visible: false,
       items: [],
+      like: '',
     }
   },
   emits: ["newTask"],
@@ -211,7 +223,6 @@ export default {
         this.show_options= !this.show_options
         this.correct_id = id  
       }
-
     },
   },
 }
