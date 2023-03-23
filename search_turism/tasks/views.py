@@ -43,9 +43,6 @@ def edit_todo(request):
     todo_svc.edit_todo(id, city, tourist_spot, description, url_image)
 
 
-@ajax_login_required
-def like_post(request, post_id):
-    post = request.POST.objects.get(id=post_id)
-    post.likes = not post.likes
-    post.save()
-    return JsonResponse({'likes': post.likes})
+def liked(request):
+    id = request.GET.get("id")
+    todo_svc.liked(id)

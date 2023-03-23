@@ -50,18 +50,5 @@ export default {
           return reject(error)
         })
     })
-  },
-  addFavs: (like)  => {
-    return new Promise((resolve, reject) => {
-      api
-        .post("/api/tasks/like", apiHelpers.dataToForm({like}))
-        .then(response => {
-      return resolve(response.data)
-      // atualizar o estado do botão de curtir/descurtir
-    })
-    .catch((error) => {
-      return reject(error)
-      })
-    })
   }
 }

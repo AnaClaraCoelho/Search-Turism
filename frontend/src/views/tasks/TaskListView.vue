@@ -180,7 +180,6 @@ export default {
       correct_id:'',
       visible: false,
       items: [],
-      liked: false,
     }
   },
   emits: ["newTask"],
@@ -239,18 +238,6 @@ export default {
         this.correct_id = id  
       }
     },
-    addFavs(like) {
-      // this.like = true
-      // this.item.like = !item.like
-      this.like = !this.like;
-      TasksApi.addFavs(like)
-        .then(response => {
-          this.like = true
-        })
-        .catch(error => {
-          console.log(error)
-        })
-    }
   },
 }
 </script>
