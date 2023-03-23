@@ -108,7 +108,6 @@ export default {
         TasksApi.addNewTask(task.city, task.touristSpot, task.description, task.url_image).then((task) => {
         // this.getTasks()
         this.loading = false
-        console.log("oi")
         this.$router.push({ name: 'tasks-list' })
       })
     },

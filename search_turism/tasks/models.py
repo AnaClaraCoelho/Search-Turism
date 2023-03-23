@@ -8,7 +8,6 @@ class ActivityLog(models.Model):
     fromuser = models.ForeignKey(User, null=True, blank=True, related_name="activitylogs_withfromuser", on_delete=models.CASCADE)
     jsondata = models.TextField(null=True, blank=True)
     created_at = models.DateTimeField('criado em', auto_now_add=True)
-
     class Meta:
         ordering = ('-created_at',)
 
@@ -26,6 +25,7 @@ class Todo(models.Model):
     city = models.CharField(max_length=512,default='no city')
     tourist_spot = models.CharField(max_length=512,default='no tourist spot')
     url_image = models.URLField(max_length = 255,default='no url image')
+    like = models.IntegerField(default=0)
 
     def to_dict_json(self):
         return {
@@ -35,4 +35,5 @@ class Todo(models.Model):
             'description': self.description,
             'url_image': self.url_image,
             'done': self.done,
+            'like': self.like
         }

@@ -8,7 +8,7 @@ def add_todo(city, touristSpot, description, url_image):
 
 
 def list_todos():
-    todos = Todo.objects.all()
+    todos = Todo.objects.all().order_by('tourist_spot')
     return [todo.to_dict_json() for todo in todos]
 
 def delete_todo(id):
@@ -22,3 +22,6 @@ def edit_todo(id, city, tourist_spot, description, url_image):
     todo_update.description = description
     todo_update.url_image= url_image
     todo_update.save()
+
+def like_spot(pk):
+    print('oi')

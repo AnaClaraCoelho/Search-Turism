@@ -1,124 +1,131 @@
 <template>
   <v-container >
-    <v-row no-gutters>
-      <v-col v-if="visible  ">
-        <v-tooltip
-          v-model="show_plus"
-          location="top right"
-        >
-          <template v-slot:activator="{ props }">
-            <v-btn
-              icon
-              v-bind="props"
-              :to="{ name: 'new-task' } "
-            >
-              <v-icon color="grey-lighten-1" >
-                mdi-plus {{ this.loggedUser_ }}
-              </v-icon>
-            </v-btn>
-          </template>
-          <span>New tourist spot</span>
-        </v-tooltip>
-      </v-col>  
-      <v-spacer></v-spacer>
-      <v-responsive width="100%"></v-responsive>
-      
-        <v-col cols="3" v-for="item in items" :key="item.id"  justify="center" >
-            <v-card
-              class="mx-auto my-12"
-              max-width="374"
-            >
-          <v-img
-            :src="item.url_image"
-            height="250px"
-            v-model="url_image"
-            cover
-            @click="openToast(item.id)"
+  <v-row>
+    <v-col>
+      <v-text-field
+        v-model="searchWord"
+        color="deep-orange darken-1"
+        :loading="loading"
+        placeholder="Find a tourist spot..."
+        append-inner-icon="mdi-magnify"
+      />
+    </v-col>
+    <v-col v-if="visible  ">
+      <v-tooltip
+        v-model="show_plus"
+        location="top right"
+      >
+        <template v-slot:activator="{ props }">
+          <v-btn
+            icon
+            v-bind="props"
+            :to="{ name: 'new-task' } "
           >
-        </v-img>
-        <v-dialog
-            v-model="show_options"
+            <v-icon color="grey-lighten-1" >
+              mdi-plus {{ this.loggedUser_ }}
+            </v-icon>
+          </v-btn>
+        </template>
+        <span>New tourist spot</span>
+      </v-tooltip>
+    </v-col>  
+  </v-row> 
+  <v-row>
+  <v-col cols="3" v-for="item in searchedSpots" :key="item.id"  justify="center" >
+    <v-card
+      class="mx-auto my-12"
+      max-width="374"
+    >
+      <v-img
+        :src="item.url_image"
+        height="250px"
+        v-model="url_image"
+        cover
+        @click="openToast(item.id)"
+      >
+    </v-img>
+    <v-dialog
+      v-model="show_options"
+    >
+      <v-card  min-width="600" class="mx-auto" >
+        <v-card-title>Select Option</v-card-title>
+        <v-divider></v-divider>
+        <v-card-text style="height: 80px;" >
+          <v-radio-group
+            v-model="dialogm1"
+            column
           >
-            <v-card  min-width="600" class="mx-auto" >
-              <v-card-title>Select Option</v-card-title>
-              <v-divider></v-divider>
-              <v-card-text style="height: 80px;" >
-                <v-radio-group
-                  v-model="dialogm1"
-                  column
-                >
-                  <!-- <v-radio
-                    label="Edit"
-                    value="Edit"
-                  ></v-radio> -->
-                  <v-radio
-                    label="Delete"
-                    value="Delete"
-                  ></v-radio>
-                  
-                </v-radio-group>
-              </v-card-text>
-              <v-divider></v-divider>
-              <v-card-actions>
-                <v-btn
-                  color="blue-darken-1"
-                  variant="text"
-                  @click="show_options = false"
-                >
-                  Close
-                </v-btn>
-                <v-btn
-                  color="blue-darken-1"
-                  variant="text"
-                  @click="action(correct_id)"
-                >
-                  Save 
-                </v-btn>
-              </v-card-actions>
-            </v-card>
-          </v-dialog>
-
-
-          <v-card-title
-          v-model="tourist_spot"
+            <v-radio
+              label="Delete"
+              value="Delete"
+            ></v-radio>
+          </v-radio-group>
+        </v-card-text>
+        <v-divider></v-divider>
+        <v-card-actions>
+          <v-btn
+            color="blue-darken-1"
+            variant="text"
+            @click="show_options = false"
           >
-            {{ item.tourist_spot }}
-          </v-card-title>
+            Cancel
+          </v-btn>
+          <v-btn
+            color="blue-darken-1"
+            variant="text"
+            @click="action(correct_id)"
+          >
+            Confirm 
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
 
-          <v-card-subtitle v-model="city">
-            {{ item.city }}
-          </v-card-subtitle>
 
-          <v-card-actions>
-            <v-btn
-              color="pink"
-              variant="text"
-              @click="item.done = !item.done"
-            >
-              Explore 
-            </v-btn>
+  <v-card-title
+  v-model="tourist_spot"
+  >
+    {{ item.tourist_spot }}
+  </v-card-title>
 
-            <v-spacer></v-spacer>
+  <v-card-subtitle v-model="city">
+    {{ item.city }}
+  </v-card-subtitle>
 
-            <v-btn
-              :icon="item.done ? 'mdi-chevron-up' : 'mdi-chevron-down'"
-              @click="item.done = !item.done"
-            ></v-btn>
-          </v-card-actions>
+  <v-card-actions>
+    <v-btn
+      :append-icon="item.done ? 'mdi-chevron-up' : 'mdi-chevron-down'"
+      @click="item.done = !item.done"
+      color="orange"
+    >
+      Read more
+    </v-btn>
 
-          <v-expand-transition>
-            <div v-show="item.done">
-              <v-divider></v-divider>
+    <v-spacer></v-spacer>
+    <v-btn
+      color="pink"
+      variant="text" 
+      @click="likeSpot(item.id)"
+    >
+      <v-icon icon="mdi-heart"></v-icon>
+      {{ item.like }} 
+    </v-btn>
+  </v-card-actions>
 
-              <v-card-text v-model="description">
-                {{ item.description }}
-              </v-card-text>
-            </div>
-          </v-expand-transition>
-        </v-card>
-        <v-responsive width="100%"></v-responsive>
+  <v-expand-transition>
+    <div v-show="item.done">
+      <v-divider></v-divider>
+
+      <v-card-text v-model="description">
+        {{ item.description }}
+      </v-card-text>
+    </div>
+  </v-expand-transition>
+</v-card>
+<v-responsive width="100%"></v-responsive>
     </v-col >
-  </v-row>   
+  </v-row>
+
 </v-container>
 </template>
 
@@ -149,6 +156,7 @@ export default {
       description: '',
       tourist_spot: '',
       url_image: '',
+      like: undefined,
       show: false,
       show_plus:false,
       show_options:false,
@@ -156,6 +164,9 @@ export default {
       correct_id:'',
       visible: false,
       items: [],
+      searchWord: '',
+      searchLoading: false,
+      like: true,
     }
   },
   emits: ["newTask"],
@@ -169,6 +180,11 @@ export default {
     },
     computed: {
     ...mapState(useAccountsStore, ["loggedUser"]),
+    searchedSpots() {
+      return this.items.filter((e) => {
+        return e.tourist_spot .toLowerCase().includes(this.searchWord.toLowerCase());
+      });
+    },
   },
   methods: {
     getTasks() {
@@ -215,7 +231,24 @@ export default {
       }
 
     },
+    likeSpot(id) {
+      
+      if(this.like === true) {
+        TasksApi.likeSpot(id)
+        .then(() => {
+          this.getTasks()
+        })
+        .then(this.like = !this.like)
+      }
+      else {
+        TasksApi.unlikeSpot(id)
+        .then(() => {
+          this.getTasks()
+        })
+        .then(this.like = !this.like)
+      }
+    }
   },
-}
+} 
 </script>
 
