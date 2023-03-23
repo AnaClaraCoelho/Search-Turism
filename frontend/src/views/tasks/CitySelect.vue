@@ -1,32 +1,8 @@
 <template>
-  <v-container >
+ <v-container >
     <v-row no-gutters>
-      <v-col v-if="visible  ">
-        <v-tooltip
-          v-model="show_plus"
-          location="top right"
-        >
-          <template v-slot:activator="{ props }">
-            <v-btn
-              icon
-              v-bind="props"
-              :to="{ name: 'new-task' } "
-            >
-              <v-icon color="grey-lighten-1" >
-                mdi-plus {{ this.loggedUser_ }}
-              </v-icon>
-            </v-btn>
-          </template>
-          <span>New tourist spot</span>
-        </v-tooltip>
-      </v-col>  
-      <v-spacer></v-spacer>
-      <div class="text-xs-center">
-        <v-btn :to="{ name: 'attractions-view' } " dark>Procure por cidade</v-btn>
-      </div>
-      <v-responsive width="100%"></v-responsive>
-      
-        <v-col cols="3" v-for="item in items" :key="item.id"  justify="center" >
+      <template cols="3" v-for="item in items" :key="item.id" justify="center">
+        <v-col v-if="item.city === citySearch">
             <v-card
               class="mx-auto my-12"
               max-width="374"
@@ -119,7 +95,8 @@
           </v-expand-transition>
         </v-card>
         <v-responsive width="100%"></v-responsive>
-    </v-col >
+      </v-col >
+    </template>
   </v-row>   
 </v-container>
 </template>
@@ -136,6 +113,17 @@ import { useAccountsStore } from "@/stores/accountsStore"
 
 export default {
   name: "TasksList",
+  props: {
+    myProp: {
+      type: String,
+      required: true
+    },
+    citySearch: {
+      type: String,
+      required: true
+    }
+
+  },
   components: {  TaskForm },
   setup() {
     const appStore = useAppStore()
