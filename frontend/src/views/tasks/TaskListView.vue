@@ -108,7 +108,7 @@
       @click="likeSpot(item.id)"
     >
       <v-icon icon="mdi-heart"></v-icon>
-      {{ item.like }}
+      {{ item.like }} 
     </v-btn>
   </v-card-actions>
 
