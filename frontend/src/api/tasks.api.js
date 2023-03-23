@@ -26,6 +26,32 @@ export default {
         })
     })
   },
+  likeSpot: (id) => {
+    console.log('Bati na API', id)
+    return new Promise((resolve, reject) => {
+      api
+        .post("/api/tasks/like", id)
+        .then((response) => {
+          return resolve(response)
+        })
+        .catch((error) => {
+          return reject(error)
+        })
+    })
+  },
+  unlikeSpot: (id) => {
+    console.log('Bati na API', id)
+    return new Promise((resolve, reject) => {
+      api
+        .post("/api/tasks/unlike", id)
+        .then((response) => {
+          return resolve(response)
+        })
+        .catch((error) => {
+          return reject(error)
+        })
+    })
+  },
   deleteTask: (id) => {
     return new Promise((resolve, reject) => {
       api

@@ -3,7 +3,9 @@ import json
 
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
+from django.shortcuts import render, redirect, get_object_or_404, HttpResponse
 
+from search_turism.tasks.models import Todo
 from ..commons.django_views_utils import ajax_login_required
 from .service import todo_svc
 
@@ -38,4 +40,19 @@ def edit_todo(request):
     description = request.POST.get('description')
     url_image = request.POST.get('url_image')
     todo_svc.edit_todo(id, city, tourist_spot, description, url_image)
+
+def add_like(request):
+    data = json.loads(request.body.decode())
+    todo_like = Todo.objects.get(id=data)
+    todo_like.like += 1
+    todo_like.save()
+    return HttpResponse()
+
+def remove_like(request):
+    data = json.loads(request.body.decode())
+    todo_like = Todo.objects.get(id=data)
+    todo_like.like -= 1
+    todo_like.save()
+    return HttpResponse()
+
 

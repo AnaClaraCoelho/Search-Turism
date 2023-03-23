@@ -8,7 +8,7 @@ htmlcov/
 /search_turism.log
 /static
 /.vscode
-
+.venv/
 .env
 
 /apimock/node_modules
