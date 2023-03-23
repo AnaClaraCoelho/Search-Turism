@@ -20,6 +20,25 @@
           <span>New tourist spot</span>
         </v-tooltip>
       </v-col>  
+      <v-enter-active></v-enter-active>
+      <v-combobox
+        v-model="model"
+        hide-selected
+        label="Digite uma cidade"
+        multiple
+        persistent-hint
+        small-chips
+      >
+        <template v-slot:no-data>
+          <v-list-tile>
+            <v-list-tile-content>
+              <v-list-tile-title>
+                No results matching "<strong>{{ search }}</strong>". Press <kbd>enter</kbd> to create a new one
+              </v-list-tile-title>
+            </v-list-tile-content>
+          </v-list-tile>
+        </template>
+    </v-combobox>
       <v-spacer></v-spacer>
       <v-responsive width="100%"></v-responsive>
       
@@ -88,7 +107,7 @@
           <v-card-subtitle v-model="city">
             {{ item.city }}
           </v-card-subtitle>
-
+          <input>
           <v-card-actions>
             <v-btn
               color="pink"
