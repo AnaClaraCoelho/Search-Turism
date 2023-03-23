@@ -104,9 +104,9 @@
           <v-col>
             <v-btn 
             icon
-            @click="addFavs(like)"
             :class="{ 'like': like }"
             :color="item.like ? 'pink' : 'gray'"
+            @click="item.like = !item.like"
             >
               <v-icon 
                 icon="mdi-heart" 

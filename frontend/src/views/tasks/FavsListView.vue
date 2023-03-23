@@ -20,7 +20,7 @@
       </v-col>  
       <v-spacer></v-spacer>
       <v-responsive width="100%"></v-responsive>
-      <template cols="3" v-for="item in items" :key="item.id" justify="center">
+      <template cols="4" v-for="item in items" :key="item.id" justify="center">
         <v-col v-if="item.like === true">
             <v-card
               class="mx-auto my-12 mr-5"
