@@ -1,10 +1,18 @@
 <template>
-<v-select
-  label="Para onde você quer ir?"
-  :items="citys"
-  v-model="citySearch"
-></v-select>
-<city-select :citySearch="citySearch" v-show="citySearch != ''"/>
+    <v-btn
+        :to="{ name: 'tasks-list' } "
+    >
+		<v-icon class="pr-2">
+			mdi-arrow-left 
+		</v-icon>
+    </v-btn>
+	<v-autocomplete
+		label="Para onde você quer ir?"
+		:items="citys"
+		v-model="citySearch"
+		class="mx-16"
+	></v-autocomplete>
+	<city-select :citySearch="citySearch" v-show="citySearch != ''"/>
 </template>
 
 

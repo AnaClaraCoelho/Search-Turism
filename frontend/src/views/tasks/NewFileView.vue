@@ -1,6 +1,12 @@
 <template>
     <v-container>
-
+      <v-btn
+        :to="{ name: 'tasks-list' } "
+      >
+        <v-icon class="pr-2">
+          mdi-arrow-left 
+        </v-icon>
+    </v-btn>
         <v-form
         ref="form"
         v-model="valid"
