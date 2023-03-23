@@ -1,0 +1,14 @@
+__pycache__
+dkdata
+*.pyc
+.coverage
+coverage.xml
+htmlcov/
+.idea
+/search_turism.log
+/static
+/.vscode
+.venv/
+.env
+
+/apimock/node_modules
